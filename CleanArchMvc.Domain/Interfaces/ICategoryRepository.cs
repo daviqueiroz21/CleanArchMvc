@@ -9,5 +9,6 @@ namespace CleanArchMvc.Domain.Interfaces
 {
     public interface ICategoryRepository : IBaseRepository<Category>
     {
+        Task<Category> GetById(int? Id);
     }
 }
