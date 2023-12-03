@@ -6,7 +6,7 @@ namespace CleanArchMvc.Domain.Tests
     public class CategoryUnitTest1
     {
         [Fact(DisplayName = "Create Category Object With Valid State")]
-        public void CreateProduct_WithValidParameters_ResultObjectValidState()
+        public void CreateCategory_WithValidParameters_ResultObjectValidState()
         {
             Action action = () => new Category(1, "Category Name");
             action.Should()
@@ -14,7 +14,7 @@ namespace CleanArchMvc.Domain.Tests
         }
 
         [Fact(DisplayName = "Create Category Object With Invalid State")]
-        public void CreateProduct_WithValidParameters_ResultObjectInvalidState()
+        public void CreateCategory_WithValidParameters_ResultObjectInvalidState()
         {
             Action action = () => new Category(-1, "Category Name");
             action.Should()
@@ -34,7 +34,7 @@ namespace CleanArchMvc.Domain.Tests
 
 
         [Fact(DisplayName = "Create Category with Missing name Value")]
-        public void CreateProduct_MissingNameValue_DomainExceptionShortName()
+        public void CreateCategory_MissingNameValue_DomainExceptionShortName()
         {
             Action action = () => new Category(1, "");
             action.Should()
@@ -42,7 +42,7 @@ namespace CleanArchMvc.Domain.Tests
                 .WithMessage("Invalid name.Name is required");
         }
         [Fact(DisplayName = "Create Category with Null name Value")]
-        public void CreateProduct_WithNullNameValue_ValidObject()
+        public void CreateCategory_WithNullNameValue_ValidObject()
         {
             Action action = () => new Category(1, null);
             action.Should()
