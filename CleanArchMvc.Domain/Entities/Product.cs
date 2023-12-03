@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace CleanArchMvc.Domain.Entities
 {
-    public class Product
+    public sealed class Product
     {
 
-        public int Id { get; set; }
-        public int Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public int Stock { get; set; }
-        public string Image {  get; set; }
+        public int Id { get; private set; }
+        public int Name { get; private set; }
+        public string Description { get; private set; }
+        public decimal Price { get; private set; }
+        public int Stock { get; private set; }
+        public string Image { get; private set; }
 
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public int CategoryId { get; private set; }
+        public Category Category { get; private set; }
     }
 }
