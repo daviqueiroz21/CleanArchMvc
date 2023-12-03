@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace CleanArchMvc.Domain.Entities
 {
-    public sealed class Category
+    public sealed class Category : Entity
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
         public ICollection<Product> Products { get; private set; }
 
@@ -32,6 +31,11 @@ namespace CleanArchMvc.Domain.Entities
             DomainExceptionValidation.When(name.Length < 3, "Invalid name, too short, minimum 3 characters");
 
             Name = name;
+        }
+
+        public void Update(string name)
+        {
+            ValidateDomain(name);
         }
     }
 }
