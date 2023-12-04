@@ -19,8 +19,7 @@ namespace CleanArchMvc.Infra.IoC
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext)
-                    .Assembly.FullName)));
+                    b => b.MigrationsAssembly("CleanArchMvc.Infra.Data")));
 
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
