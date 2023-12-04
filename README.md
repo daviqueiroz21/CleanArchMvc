@@ -296,48 +296,56 @@ A configuração das entidades do modelo é realizada utilizando a Fluent API do
 -   Comunicação com a camada de domínio representada pelo projeto Domain
 
 
-CQS - Command Query Separation
+# CQS - Command Query Separation
+
 O princípio CQS (Command Query Separation) estabelece que cada método deve ser ou um comando que executa uma ação ou uma consulta que retorna dados ao chamador, mas não ambos. O CQS define dois tipos de mensagens dependendo de seu valor de retorno:
 
-A não existência de um valor de retorno (void) especifica que temos um Comando.
-A existência de um valor de retorno especifica que temos uma Consulta.
+1.  A não existência de um valor de retorno (void) especifica que temos um Comando.
+2.  A existência de um valor de retorno especifica que temos uma Consulta.
+
 Em resumo, um comando é um método que altera o estado, enquanto uma consulta é um método que retorna um estado.
 
-CQRS - Command Query Responsibility Separation
+# CQRS - Command Query Responsibility Separation
+
 O CQRS (Command Query Responsibility Separation) leva o conceito do CQS adiante, determinando a separação dos comandos e das consultas em objetos diferentes. A ideia principal do CQRS é permitir que um aplicativo funcione com diferentes modelos: um modelo para comandos e outro para consultas.
 
 Principais pontos do CQRS:
 
-Separação de comandos e consultas em modelos distintos.
-Flexibilidade com diferentes modelos para diferentes operações.
-Modelos específicos para comando e consulta.
-Não dependência de apenas um DTO para todas as operações CRUD.
-Implementação do padrão Mediator para otimizar e favorecer o desacoplamento.
-Implementação do Padrão CQRS no Projeto (Entidade: Product)
-Modelos para Comandos:
+-   Separação de comandos e consultas em modelos distintos.
+-   Flexibilidade com diferentes modelos para diferentes operações.
+-   Modelos específicos para comando e consulta.
+-   Não dependência de apenas um DTO para todas as operações CRUD.
+-   Implementação do padrão Mediator para otimizar e favorecer o desacoplamento.
 
-ProductCommand
-ProductCreateCommand
-ProductUpdateCommand
-ProductRemoveCommand
-Modelos para Consultas:
+## Implementação do Padrão CQRS no Projeto (Entidade: Product)
 
-GetProductByIdQuery
-GetProductsQuery
-Essas classes representam os comandos e consultas e devem implementar a interface IRequest da MediatR, que representa um request com um response. A interface IRequest aceita o tipo que o respectivo handler deverá retornar para o componente chamador. Um Request contém propriedades que são usadas para fazer o input dos dados para os Handlers.
+1.  **Modelos para Comandos:**
+    
+    -   ProductCommand
+    -   ProductCreateCommand
+    -   ProductUpdateCommand
+    -   ProductRemoveCommand
+2.  **Modelos para Consultas:**
+    
+    -   GetProductByIdQuery
+    -   GetProductsQuery
 
-Handlers para Processar Comandos e Consultas:
-GetProductByIdQueryHandler
-GetProductsQueryHandler
-ProductCreateCommandHandler
-ProductUpdateCommandHandler
-ProductRemoveCommandHandler
-Essas classes devem implementar a interface IRequestHandler<Request, Response>, que trata o respectivo comando. No método Handle, definimos o comando a ser processado e o retorno esperado.
+Essas classes representam os comandos e consultas e devem implementar a interface `IRequest` da MediatR, que representa um request com um response. A interface `IRequest` aceita o tipo que o respectivo handler deverá retornar para o componente chamador. Um Request contém propriedades que são usadas para fazer o input dos dados para os Handlers.
 
-Serviço ProductService:
+3.  **Handlers para Processar Comandos e Consultas:**
+    -   GetProductByIdQueryHandler
+    -   GetProductsQueryHandler
+    -   ProductCreateCommandHandler
+    -   ProductUpdateCommandHandler
+    -   ProductRemoveCommandHandler
 
-Injetar a instância do Mediatr (IMediator). O padrão Mediator receberá um request e invocará o handler associado a ele.
-Mapeamento de DTOs:
+Essas classes devem implementar a interface `IRequestHandler<Request, Response>`, que trata o respectivo comando. No método `Handle`, definimos o comando a ser processado e o retorno esperado.
 
-Definir um novo mapeamento de DTOs para os DTOs dos comandos e consultas criados.
+4.  **Serviço ProductService:**
+    
+    -   Injetar a instância do Mediatr (`IMediator`). O padrão Mediator receberá um request e invocará o handler associado a ele.
+5.  **Mapeamento de DTOs:**
+    
+    -   Definir um novo mapeamento de DTOs para os DTOs dos comandos e consultas criados.
+
 Ao seguir esses passos, implementamos o padrão CQRS no projeto, proporcionando uma separação clara entre comandos e consultas, aumentando a flexibilidade e facilitando o tratamento de diferentes operações. O uso do padrão Mediator contribui para o desacoplamento e a organização do código.
