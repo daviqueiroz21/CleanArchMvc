@@ -203,3 +203,47 @@ Essas classes devem implementar a interface `IRequestHandler<Request, Response>`
     -   Definir um novo mapeamento de DTOs para os DTOs dos comandos e consultas criados.
 
 Ao seguir esses passos, implementamos o padrão CQRS no projeto, proporcionando uma separação clara entre comandos e consultas, aumentando a flexibilidade e facilitando o tratamento de diferentes operações. O uso do padrão Mediator contribui para o desacoplamento e a organização do código. 🚀
+
+
+#   Fluxo sem CQRS 
+[![](https://mermaid.ink/img/pako:eNpVjsFugzAMhl8l8pmikEAROVQqsHOltqeRHiLI1mgkQWmYxoB3X4o0TbvZ_j7_9gyt7SQweHdiuKNrzQ1Cx6ayxjvb99Ld0G53WOrraUFlc5HuU7Xy9pTKDbwYr_y0oKo5y8E-lLdu2nD1D5d_G1vUESLQ0mmhunB7flIO_i615MBC2Qn3wYGbNXhi9PYymRaYd6OMYBw64WWtRHhZA3sT_SNMB2FerdW_UmiBzfAFjCY4ThOc5JgUhJJsTyOYgBVpjCnNi5zkaUKydL9G8L0F4DhbfwBba1Za?type=png)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNpVjsFugzAMhl8l8pmikEAROVQqsHOltqeRHiLI1mgkQWmYxoB3X4o0TbvZ_j7_9gyt7SQweHdiuKNrzQ1Cx6ayxjvb99Ld0G53WOrraUFlc5HuU7Xy9pTKDbwYr_y0oKo5y8E-lLdu2nD1D5d_G1vUESLQ0mmhunB7flIO_i615MBC2Qn3wYGbNXhi9PYymRaYd6OMYBw64WWtRHhZA3sT_SNMB2FerdW_UmiBzfAFjCY4ThOc5JgUhJJsTyOYgBVpjCnNi5zkaUKydL9G8L0F4DhbfwBba1Za)
+
+# Fluxo com CQRS
+
+[![](https://mermaid.ink/img/pako:eNptj09rhDAQxb9KmLMr_l0xh8KqC72UQndP1T0EM-2G1URiLLXqd282UGiht5n5vXnzZoFWcQQK75oNV3KuGknIoS6VNFp1HeoL2e0e1ur8vJKiPqH-EC1e7qLCgSfkghmlV1LWj0xyuzE6XDp8lEaYeSVV_YKDGoVVzg5Xf3Dxn-HBRfl1HjzoUfdMcJt3udMGzBV7bIDakjN9a6CRm9WxyajTLFugRk_owTRwZrASzL7ZA31j3WinA5OvSvU_ItsCXeATaBwGfhIGYRZEeRRH6T72YAaaJ34Qx1meRVkSRmmy3zz4cgaBn27f27ZnbA?type=png)](https://mermaid-js.github.io/mermaid-live-editor/edit#pako:eNptj09rhDAQxb9KmLMr_l0xh8KqC72UQndP1T0EM-2G1URiLLXqd282UGiht5n5vXnzZoFWcQQK75oNV3KuGknIoS6VNFp1HeoL2e0e1ur8vJKiPqH-EC1e7qLCgSfkghmlV1LWj0xyuzE6XDp8lEaYeSVV_YKDGoVVzg5Xf3Dxn-HBRfl1HjzoUfdMcJt3udMGzBV7bIDakjN9a6CRm9WxyajTLFugRk_owTRwZrASzL7ZA31j3WinA5OvSvU_ItsCXeATaBwGfhIGYRZEeRRH6T72YAaaJ34Qx1meRVkSRmmy3zz4cgaBn27f27ZnbA)
+
+OBS :  
+
+- usar o pacote MediatR
+```c#
+var assembly = AppDomain.CurrentDomain.Load("CleanArchMvc.Application");
+             services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(assembly);
+            });
+```
+
+
+
+## Considerações sobre a implementação
+
+A implementação do CQRS foi feita usando uma abordagem bem mais simples
+
+Foi feita apenas para uma parte do domínio: Product
+
+Não usamos mensagens para processar comandos e publicar os eventos de atualização
+
+Não foi usado outro padrão como o Event Sourcing
+
+Usamos apenas o padrão Mediator, mas podemos implementar sem usar este padrão
+
+Os comandos implementados estão retornando um valor: Product
+
+Porque a implementação do CQRS foi feita na camada Application
+
+-   No nosso contexto, comandos e consultas estão atuando como métodos do serviço e são clientes do projeto Domain que retornam uma visão otimizada do domínio
+
+Poderíamos implementar o CQRS na camada Domain
+
+-   Modelo de domínio mais complexos
+-   Realizar a validação a nível de comando e consulta
